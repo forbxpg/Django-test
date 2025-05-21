@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # third party apps
+    "django_filters",
     "rest_framework",
     "tailwind",
     "theme",
@@ -109,8 +110,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 STATIC_URL = "static/"
-STATIC_URL = "app/static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

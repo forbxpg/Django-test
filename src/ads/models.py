@@ -2,6 +2,7 @@
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
 
@@ -27,8 +28,8 @@ class Ad(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_("Автор объявления"),
     )
-    image_url = models.URLField(
-        _("Ссылка на изображение"),
+    image = models.ImageField(
+        _("Изображение объявления"),
         blank=True,
         null=True,
     )
@@ -59,7 +60,7 @@ class Ad(models.Model):
         ]
 
     def __str__(self):
-        return _("Объявление: {title} пользователя {user}") % {
+        return _("Объявление: %(title)s пользователя %(user)s") % {
             "title": self.title,
             "user": self.user.username,
         }
@@ -94,6 +95,6 @@ class Category(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return _("Категория: {name}") % {
+        return _("Категория: %(name)s") % {
             "name": self.name,
         }
