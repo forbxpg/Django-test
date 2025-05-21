@@ -1,0 +1,10 @@
+services:
+  sharings_backend:
+    build: ../src
+    container_name: sharings_backend
+    env_file: ../.env
+    ports:
+      - "8008:8008"
+
+
+

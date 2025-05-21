@@ -14,7 +14,7 @@ SECRET_KEY = "django-insecure-^ysx+z&w)-ny7px3cclaj4qq%iwjcftrb8o)obb*%%9%-he0i*
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     "rest_framework",
     # local apps
     "ads.apps.AdsConfig",
+    "exchanges.apps.ExchangesConfig",
+    # "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [
@@ -90,5 +92,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
+STATIC_URL = "app/static/"
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

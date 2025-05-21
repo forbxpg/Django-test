@@ -16,7 +16,7 @@ class Ad(models.Model):
     """Модель объявления в базе данных."""
 
     title = models.CharField(
-        max_length=config.TITLE_LENGTH,
+        max_length=config.AD_TITLE_LENGTH,
         verbose_name=_("Заголовок объявления"),
     )
     description = models.TextField(
