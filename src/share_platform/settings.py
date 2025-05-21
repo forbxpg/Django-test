@@ -25,10 +25,18 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # third party apps
     "rest_framework",
+    "tailwind",
+    "theme",
     # local apps
     "ads.apps.AdsConfig",
     "exchanges.apps.ExchangesConfig",
     # "users.apps.UsersConfig",
+]
+
+TAILWIND_APP_NAME = "theme"
+INTERNAL_IPS = [
+    "0.0.0.0",
+    "127.0.0.1",
 ]
 
 MIDDLEWARE = [
@@ -41,12 +49,22 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+if DEBUG:
+    INSTALLED_APPS.append("django_browser_reload")
+    MIDDLEWARE.append(
+        "django_browser_reload.middleware.BrowserReloadMiddleware",
+    )
+
 ROOT_URLCONF = "share_platform.urls"
+
+TEMPLATES_DIRS = BASE_DIR / "templates"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            TEMPLATES_DIRS,
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
