@@ -85,5 +85,5 @@ def ad_delete_view(request, ad_id):
         raise PermissionDenied("У вас нет прав на удаление этого объявления.")
     if request.method == "POST":
         ad.delete()
-        return redirect("ads:ads_list")
-    return render(request, "ads/form.html", {"ad": ad})
+        return redirect(reverse("ads:ads-list"))
+    return render(request, "ads/delete.html", {"ad": ad})
