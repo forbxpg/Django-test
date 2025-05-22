@@ -11,16 +11,36 @@ class AdForm(forms.ModelForm):
         model = Ad
         fields = ("title", "description", "category", "image", "condition")
         widgets = {
-            "title": forms.TextInput(attrs={ "class": config.TITLE_CLASS, "placeholder": _("Введите название объявления") }),
-            "description": forms.Textarea(attrs={ "rows": config.DESCRIPTION_ROWS, "class": config.DESCRIPTION_CLASS, "placeholder": _("Введите описание объявления") }),
-            "category": forms.Select(attrs={ "class": config.CATEGORY_CLASS }),
-            "condition": forms.Select(attrs={ "class": config.CONDITION_CLASS }),
-            "image": forms.ClearableFileInput(attrs={ "class": config.IMAGE_CLASS }),
+            "title": forms.TextInput(
+                attrs={
+                    "class": config.TITLE_CLASS,
+                    "placeholder": _("Введите название объявления"),
+                },
+            ),
+            "description": forms.Textarea(
+                attrs={
+                    "rows": config.DESCRIPTION_ROWS,
+                    "class": config.DESCRIPTION_CLASS,
+                    "placeholder": _("Введите описание объявления"),
+                }
+            ),
+            "category": forms.Select(
+                attrs={
+                    "class": config.CATEGORY_CLASS,
+                    "placeholder": _("Выберите категорию"),
+                }
+            ),
+            "condition": forms.Select(
+                attrs={
+                    "class": config.CONDITION_CLASS,
+                    "placeholder": _("Выберите состояние"),
+                }
+            ),
+            "image": forms.ClearableFileInput(
+                attrs={
+                    "class": config.IMAGE_CLASS + " custom-file-input",
+                    "placeholder": _("Выберите изображение"),
+                }
+            ),
         }
-        labels = {
-            "title": _("Title"),
-            "description": _("Description"),
-            "category": _("Category"),
-            "image": _("Image"),
-            "condition": _("Condition"),
-        }
+        labels = {"category": _("Категория"), "condition": _("Состояние")}

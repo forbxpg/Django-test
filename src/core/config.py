@@ -15,6 +15,8 @@ EXCHANGE_STATUS_LENGTH = 10
 
 
 # User constants
+NAME_LENGTH = 150
+PHONE_REGION = "RU"
 
 
 # CSS classes

@@ -1,62 +1,59 @@
 {% extends "_base.html" %}
 {% block content %}
-<section class="bg-white dark:bg-gray-900">
-  <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-    <h2 class="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
-      {% if form.instance.pk %}Редактировать объявление{% else %}Создать объявление{% endif %}
-    </h2>
+  <section class="bg-white dark:bg-gray-900">
+    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+      <h2 class="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+        {% if form.instance.pk %}Редактировать объявление{% else %}Создать объявление{% endif %}
+      </h2>
 
-    <form method="post" enctype="multipart/form-data" action="{% url 'ads:ad-create' %}" class="space-y-6">
-      {% csrf_token %}
-      <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-        <div class="sm:col-span-2">
-          {{ form.title.label_tag }}
-          {{ form.title }}
-          {% for err in form.title.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ err }}</p>
-          {% endfor %}
+      <form method="post" enctype="multipart/form-data" action="{% url 'ads:ad-create' %}" class="space-y-6">
+        {% csrf_token %}
+        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+          <div class="sm:col-span-2">
+            {{ form.title }}
+            {% for err in form.title.errors %}
+              <p class="text-red-600 text-sm mt-1">{{ err }}</p>
+            {% endfor %}
+          </div>
+
+          <div class="sm:col-span-2">
+            {{ form.description }}
+            {% for err in form.description.errors %}
+              <p class="text-red-600 text-sm mt-1">{{ err }}</p>
+            {% endfor %}
+          </div>
+
+          <div>
+            {{ form.category.label }}
+            {{ form.category }}
+            {% for err in form.category.errors %}
+              <p class="text-red-600 text-sm mt-1">{{ err }}</p>
+            {% endfor %}
+          </div>
+
+          <div>
+            {{ form.condition.label }}
+            {{ form.condition }}
+            {% for err in form.condition.errors %}
+              <p class="text-red-600 text-sm mt-1">{{ err }}</p>
+            {% endfor %}
+          </div>
+
+          <div class="sm:col-span-2">
+            {{ form.image }}
+            {% for err in form.image.errors %}
+              <p class="text-red-600 text-sm mt-1">{{ err }}</p>
+            {% endfor %}
+          </div>
         </div>
 
-        <div class="sm:col-span-2">
-          {{ form.description.label_tag }}
-          {{ form.description }}
-          {% for err in form.description.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ err }}</p>
-          {% endfor %}
-        </div>
-
-        <div>
-          {{ form.category.label_tag }}
-          {{ form.category }}
-          {% for err in form.category.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ err }}</p>
-          {% endfor %}
-        </div>
-
-        <div>
-          {{ form.condition.label_tag }}
-          {{ form.condition }}
-          {% for err in form.condition.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ err }}</p>
-          {% endfor %}
-        </div>
-
-        <div class="sm:col-span-2">
-          {{ form.image.label_tag }}
-          {{ form.image }}
-          {% for err in form.image.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ err }}</p>
-          {% endfor %}
-        </div>
-      </div>
-
-      <button
-        type="submit"
-        class="inline-flex items-center px-5 py-2.5 mt-4 text-sm font-medium text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
-      >
-        Сохранить объявление
-      </button>
-    </form>
-  </div>
-</section>
+        <button
+          type="submit"
+          class="inline-flex items-center px-5 py-2.5 mt-4 text-sm font-medium text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:scale-105 transition duration-100 ease-in-out"
+        >
+          Сохранить объявление
+        </button>
+      </form>
+    </div>
+  </section>
 {% endblock content %}

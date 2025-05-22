@@ -5,6 +5,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
+AUTH_USER_MODEL = 'users.User'
+
+
 load_dotenv()
 
 
@@ -38,7 +41,7 @@ INSTALLED_APPS = [
     # local apps
     "ads.apps.AdsConfig",
     "exchanges.apps.ExchangesConfig",
-    # "users.apps.UsersConfig",
+    "users.apps.UsersConfig",
 ]
 
 TAILWIND_APP_NAME = "theme"
@@ -109,11 +112,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru-RU"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
+
 
 USE_TZ = True
 

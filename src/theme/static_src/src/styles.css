@@ -25,3 +25,10 @@
 .overflow-wrap-anywhere {
     overflow-wrap: anywhere;
 }
+
+@layer components {
+    .custom-file-input::file-selector-button {
+        @apply pr-3 bg-blue-700 py-2 text-white rounded-lg shadow hover:scale-105 transition-transform duration-100;
+    }
+}
+

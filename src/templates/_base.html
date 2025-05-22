@@ -10,11 +10,16 @@
   {% tailwind_css %}
 </head>
 
-<body class="bg-gray-50 font-serif leading-normal tracking-normal">
-{% include "includes/navbar.html" %}
-{% block content %}
-{% endblock %}
+<body class="flex flex-col min-h-screen bg-gray-50 font-serif leading-normal tracking-normal">
+<header>
+  {% include "includes/navbar.html" %}
+</header>
+<main class="flex-grow">
+  {% block content %}{% endblock %}
+</main>
+<footer>
+  {% include 'includes/footer.html' %}
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
-{% include 'includes/footer.html' %}
 </html>
