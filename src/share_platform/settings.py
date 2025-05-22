@@ -5,11 +5,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
-AUTH_USER_MODEL = "users.User"
-
-
 load_dotenv()
 
+
+AUTH_USER_MODEL = "users.User"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -132,3 +131,5 @@ PHONENUMBER_DEFAULT_REGION = "RU"
 PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = "/ads/"

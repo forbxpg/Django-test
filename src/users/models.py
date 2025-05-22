@@ -11,8 +11,16 @@ from core import config
 class User(AbstractUser):
     """Модель пользователя в БД."""
 
+    first_name = models.CharField(
+        _("Имя"),
+        max_length=config.USER_NAME_LENGTH,
+    )
+    last_name = models.CharField(
+        _("Фамилия"),
+        max_length=config.USER_NAME_LENGTH,
+    )
     email = models.EmailField(
-        _("Email"),
+        _("Адрес электронной почты"),
         unique=True,
     )
     phone = PhoneNumberField(
@@ -20,16 +28,11 @@ class User(AbstractUser):
         blank=True,
         null=True,
         region=config.PHONE_REGION,
-    )
-    avatar = models.ImageField(
-        _("Аватар"),
-        upload_to="avatars/",
-        blank=True,
-        null=True,
+        unique=True,
     )
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["email"]
+    REQUIRED_FIELDS = ["email", "first_name", "last_name"]
 
     class Meta:
         verbose_name = _("Пользователь")

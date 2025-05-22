@@ -2,8 +2,9 @@
 
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm
+from django.utils.translation import gettext_lazy as _
 from unfold.forms import UserCreationForm
-
 from core import config
 
 
@@ -26,19 +27,25 @@ class UserCreateForm(UserCreationForm):
         )
         widgets = {
             "username": forms.TextInput(
-                attrs={"placeholder": "Имя пользователя", "class": config.TITLE_CLASS}
+                attrs={
+                    "placeholder": _("Имя пользователя"),
+                    "class": config.TITLE_CLASS,
+                }
             ),
             "email": forms.EmailInput(
-                attrs={"placeholder": "Email", "class": config.TITLE_CLASS}
+                attrs={"placeholder": _("Email"), "class": config.TITLE_CLASS},
             ),
             "phone": forms.TextInput(
-                attrs={"placeholder": "Телефон", "class": config.TITLE_CLASS}
+                attrs={
+                    "placeholder": _("Номер телефона (опционально)"),
+                    "class": config.TITLE_CLASS,
+                }
             ),
             "first_name": forms.TextInput(
-                attrs={"placeholder": "Имя", "class": config.TITLE_CLASS}
+                attrs={"placeholder": _("Имя"), "class": config.TITLE_CLASS}
             ),
             "last_name": forms.TextInput(
-                attrs={"placeholder": "Фамилия", "class": config.TITLE_CLASS}
+                attrs={"placeholder": _("Фамилия"), "class": config.TITLE_CLASS},
             ),
         }
 
@@ -47,13 +54,32 @@ class UserCreateForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields["password1"].widget.attrs.update(
             {
-                "placeholder": "Пароль",
+                "placeholder": _("Пароль"),
                 "class": config.TITLE_CLASS,
             }
         )
         self.fields["password2"].widget.attrs.update(
             {
-                "placeholder": "Повторите пароль",
+                "placeholder": _("Повторите пароль"),
+                "class": config.TITLE_CLASS,
+            }
+        )
+
+
+class UserLoginForm(AuthenticationForm):
+    """Форма для входа пользователя."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["username"].widget.attrs.update(
+            {
+                "placeholder": _("Имя пользователя"),
+                "class": config.TITLE_CLASS,
+            }
+        )
+        self.fields["password"].widget.attrs.update(
+            {
+                "placeholder": _("Пароль"),
                 "class": config.TITLE_CLASS,
             }
         )
