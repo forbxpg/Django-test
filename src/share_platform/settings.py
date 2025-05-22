@@ -5,7 +5,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = "users.User"
 
 
 load_dotenv()
@@ -127,5 +127,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
+# Номера телефонов
+PHONENUMBER_DEFAULT_REGION = "RU"
+PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

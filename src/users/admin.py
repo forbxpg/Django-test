@@ -18,6 +18,15 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
+    list_display = (
+        "username",
+        "email",
+        "phone",
+        "first_name",
+        "last_name",
+        "is_staff",
+        "is_active",
+    )
 
 
 @admin.register(Group)
