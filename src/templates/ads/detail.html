@@ -5,45 +5,41 @@
     <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0 pb-5">
       <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pb-10">
         <div class="shrink-0 max-w-md lg:max-w-lg mx-auto my-0 pb-0">
-          <img
-            src="{{ ad.image.url }}"
-            alt="Product Image"
-            class="w-full aspect-[12/11] object-cover rounded-xl shadow-md"
-          />
+          {% if ad.image %}
+            <img
+              src="{{ ad.image.url }}"
+              alt="{{ ad.title }}"
+              class="w-full aspect-[12/11] object-cover rounded-xl shadow-md"
+            />
+          {% else %}
+            <div class="h-full w-full bg-gray-300 flex items-center justify-center text-gray-500">
+              Нет изображения
+            </div>
+          {% endif %}
         </div>
         <div class="mt-6 sm:mt-8 lg:mt-0">
-          <div class="flex items-center justify-between">
-            <h1
-              class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
-            >
+          <div class="flex items-center justify-between flex-wrap">
+            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white overflow-wrap-anywhere max-w-full">
               {{ ad.title }}
             </h1>
           </div>
-          <div class="my-3"><a class="hover:underline">{{ ad.user.username }}</a></div>
-          <div class="text-sm font-light">{{ ad.created_at|date:"H:i d.m.y" }}</div>
+          <div class="my-3 text-sm font-light text-gray-500 dark:text-gray-400">
+            <a href="#" class="hover:underline">{{ ad.user.username }}</a> •
+            <time datetime="{{ ad.created_at|date:'c' }}">{{ ad.created_at|date:"H:i d.m.y" }}</time>
+          </div>
           <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
             <div class="flex items-center gap-2 mt-2 sm:mt-0">
-              <span
-                class="inline-flex items-center gap-3 font-medium bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300 px-3 py-0.5 rounded"
-              >
-                <a href="{% url 'ads:ads-list' %}?category={{ ad.category.slug }}">
-                  {{ ad.category.name }}
-                </a>
+              <span class="inline-flex items-center gap-3 font-medium bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300 px-3 py-0.5 rounded">
+                <a href="{% url 'ads:ads-list' %}?category={{ ad.category.slug }}">{{ ad.category.name }}</a>
               </span>
-              <span
-                class="inline-flex items-center gap-3 font-medium bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300 px-2.5 py-0.5 rounded"
-              >
-                <a href="{% url 'ads:ads-list' %}?condition={{ ad.condition }}">
-                  {{ ad.condition_display }}
-                </a>
+              <span class="inline-flex items-center gap-3 font-medium bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300 px-2.5 py-0.5 rounded">
+                <a href="{% url 'ads:ads-list' %}?condition={{ ad.condition }}">{{ ad.condition_display }}</a>
               </span>
             </div>
           </div>
-
           <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
             <a
               href="#"
-              title=""
               class="text-white mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
               role="button"
             >
@@ -67,12 +63,10 @@
               Обменять
             </a>
           </div>
-
           <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800"/>
-
-          <p class="mb-6 text-gray-500 dark:text-gray-400">
+          <div class="mb-6 text-gray-500 dark:text-gray-400 overflow-wrap-anywhere whitespace-normal">
             {{ ad.description }}
-          </p>
+          </div>
         </div>
       </div>
     </div>

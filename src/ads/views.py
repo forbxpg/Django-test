@@ -1,7 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 
+from core import config
 from core.utils import AdConditionChoices
 from .filters import AdFilter
+from .forms import AdForm
 from .models import Ad, Category
 from .services import get_excluded_ad_ids
 
@@ -9,15 +14,23 @@ from .services import get_excluded_ad_ids
 def ads_list_view(request, category_slug=None):
     """Отображает список объявлений."""
     excluded_ids = get_excluded_ad_ids()
-    ads = Ad.objects.exclude(id__in=excluded_ids)
-    filter = AdFilter(request.GET, queryset=ads)
+    ads = Ad.objects.select_related("user", "category").exclude(id__in=excluded_ids)
+    ad_filter = AdFilter(request.GET, queryset=ads)
+    paginator = Paginator(ad_filter.qs, config.ADS_PER_PAGE)
+    page_num = request.GET.get("page")
+    try:
+        page_obj = paginator.page(page_num)
+    except PageNotAnInteger:
+        page_obj = paginator.page(config.FIRST_PAGE)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
     return render(
         request,
         "ads/list.html",
         {
-            "filter": filter,
+            "filter": ad_filter,
             "categories": Category.objects.all(),
-            "ads": filter.qs,
+            "page_obj": page_obj,
         },
     )
 
@@ -32,3 +45,45 @@ def ad_detail_view(request, ad_id):
             "ad": ad,
         },
     )
+
+
+def ad_create_view(request):
+    """Создает новое объявление."""
+    if request.method == "POST":
+        form = AdForm(request.POST, request.FILES)
+        if form.is_valid():
+            ad = form.save(commit=False)
+            ad.user = request.user
+            ad.save()
+            return redirect(reverse("ads:ad-detail", kwargs={"ad_id": ad.id}))
+    else:
+        form = AdForm()
+
+    return render(request, "ads/form.html", {"form": form})
+
+
+def ad_update_view(request, ad_id):
+    """Редактирует существующее объявление."""
+    ad = get_object_or_404(Ad, id=ad_id)
+    if ad.user != request.user:
+        raise PermissionDenied("У вас нет прав на редактирование этого объявления.")
+    if request.method == "POST":
+        form = AdForm(request.POST, request.FILES, instance=ad)
+        if form.is_valid():
+            form.save()
+            return redirect("ads:ad-detail", ad_id=ad.id)
+    else:
+        form = AdForm(instance=ad)
+    return render(request, "ads/form.html", {"form": form, "ad": ad})
+
+
+@login_required
+def ad_delete_view(request, ad_id):
+    """Удаляет существующее объявление."""
+    ad = get_object_or_404(Ad, id=ad_id)
+    if ad.user != request.user:
+        raise PermissionDenied("У вас нет прав на удаление этого объявления.")
+    if request.method == "POST":
+        ad.delete()
+        return redirect("ads:ads_list")
+    return render(request, "ads/form.html", {"ad": ad})
