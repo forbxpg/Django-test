@@ -59,6 +59,11 @@ class Ad(models.Model):
             models.Index(fields=["category"], name="category_idx"),
         ]
 
+    @property
+    def condition_display(self):
+        """Возвращает отображаемое состояние объявления."""
+        return AdConditionChoices(self.condition).label
+
     def __str__(self):
         return _("Объявление: %(title)s пользователя %(user)s") % {
             "title": self.title,

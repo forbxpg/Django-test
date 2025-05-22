@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from unfold.admin import ModelAdmin
+
+from .models import ExchangeProposal
+
+
+@admin.register(ExchangeProposal)
+class ExchangeProposalAdmin(ModelAdmin): ...

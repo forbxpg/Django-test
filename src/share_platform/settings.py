@@ -17,7 +17,6 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -28,6 +27,14 @@ INSTALLED_APPS = [
     "rest_framework",
     "tailwind",
     "theme",
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+    "unfold.contrib.inlines",
+    "unfold.contrib.import_export",
+    "unfold.contrib.guardian",
+    "unfold.contrib.simple_history",
+    "django.contrib.admin",
     # local apps
     "ads.apps.AdsConfig",
     "exchanges.apps.ExchangesConfig",
@@ -110,10 +117,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-MEDIA_URL = "media/"
+MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
 

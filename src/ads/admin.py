@@ -1,10 +1,13 @@
 from django.contrib import admin
 
+from unfold.admin import ModelAdmin
+
 from .models import Ad, Category
+
 
 # Register your models here.
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(ModelAdmin):
     """Админка для категорий."""
 
     list_display = ("name", "slug")
@@ -12,5 +15,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Ad)
-class AdAdmin(admin.ModelAdmin):
-    ...
+class AdAdmin(ModelAdmin): ...
