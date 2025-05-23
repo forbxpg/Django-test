@@ -85,15 +85,38 @@ class UserLoginForm(AuthenticationForm):
         )
 
 
-class UserUpdateForm(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
     """Форма для редактирования профиля пользователя."""
 
     class Meta:
         model = User
-        fields = ("username", "email", "first_name", "last_name")
+        fields = (
+            "username",
+            "email",
+            "phone",
+            "first_name",
+            "last_name",
+        )
         widgets = {
-            "username": forms.TextInput(attrs={"placeholder": "Имя пользователя"}),
-            "email": forms.EmailInput(attrs={"placeholder": "Email"}),
-            "first_name": forms.TextInput(attrs={"placeholder": "Имя"}),
-            "last_name": forms.TextInput(attrs={"placeholder": "Фамилия"}),
+            "username": forms.TextInput(
+                attrs={
+                    "placeholder": _("Имя пользова��еля"),
+                    "class": config.TITLE_CLASS,
+                }
+            ),
+            "email": forms.EmailInput(
+                attrs={"placeholder": _("Email"), "class": config.TITLE_CLASS},
+            ),
+            "phone": forms.TextInput(
+                attrs={
+                    "placeholder": _("Номер телефона (опционально)"),
+                    "class": config.TITLE_CLASS,
+                }
+            ),
+            "first_name": forms.TextInput(
+                attrs={"placeholder": _("Имя"), "class": config.TITLE_CLASS}
+            ),
+            "last_name": forms.TextInput(
+                attrs={"placeholder": _("Фамилия"), "class": config.TITLE_CLASS},
+            ),
         }

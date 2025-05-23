@@ -1,0 +1,54 @@
+{% extends '_base.html' %}
+{% load i18n %}
+
+{% block content %}
+  <section class="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+    <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow p-8">
+      <h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+        {% trans "Профиль пользователя" %}
+      </h1>
+
+      <form method="post" action="{% url 'users:profile' %}" class="space-y-6">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            {{ form.username }}
+            {{ form.username.errors }}
+          </div>
+          <div>
+            {{ form.email }}
+            {{ form.email.errors }}
+          </div>
+          <div>
+            {{ form.first_name }}
+            {{ form.first_name.errors }}
+          </div>
+          <div>
+            {{ form.last_name }}
+            {{ form.last_name.errors }}
+          </div>
+          <div>
+            {{ form.phone }}
+            {{ form.phone.errors }}
+        </div>
+
+        <div class="flex justify-end space-x-4">
+          <button
+            type="submit"
+            class="text-white bg-blue-700 transition-transform duration-100 hover:scale-105 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-10 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer"
+          >
+            Сохранить
+          </button>
+          <a
+            href="{% url 'ads:ads-list' %}"
+            class="text-white bg-blue-700 transition-transform duration-100 hover:scale-105 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-14 pt-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer"
+          >
+            Назад
+          </a>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock content %}
