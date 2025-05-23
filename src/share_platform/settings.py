@@ -133,3 +133,5 @@ PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/ads/"
+
+LOGIN_URL = "users:login"

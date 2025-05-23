@@ -50,7 +50,14 @@ class ExchangeProposal(models.Model):
                 violation_error_message=_(
                     "Предложение обмена уже существует для этих объявлений."
                 ),
-            )
+            ),
+            models.CheckConstraint(
+                check=~models.Q(ad_sender=models.F("ad_receiver")),
+                name="ad_sender_not_equal_ad_receiver",
+                violation_error_message=_(
+                    "Объявления отправителя и получателя не могут быть одинаковыми."
+                ),
+            ),
         ]
         indexes = [
             models.Index(fields=["ad_sender"], name="ad_sender_idx"),
@@ -58,7 +65,7 @@ class ExchangeProposal(models.Model):
         ]
 
     def __str__(self):
-        return _("Предложение обмена товара {ad_sender} на товар {ad_receiver}") % {
+        return _("Предложение обмена товара %(ad_sender)s на товар %(ad_receiver)s") % {
             "ad_sender": self.ad_sender.title,
             "ad_receiver": self.ad_receiver.title,
         }
