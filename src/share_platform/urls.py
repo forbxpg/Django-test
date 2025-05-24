@@ -10,6 +10,7 @@ urlpatterns = [
     path("ads/", include("ads.urls")),
     path("", include("core.urls")),
     path("users/", include("users.urls")),
+    path("exchanges/", include("exchanges.urls")),
 ]
 
 if settings.DEBUG:

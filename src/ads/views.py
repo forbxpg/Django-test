@@ -109,4 +109,8 @@ def ad_delete_view(request, ad_id):
     if request.method == "POST":
         ad.delete()
         return redirect(reverse("ads:ads-list"))
-    return render(request, "ads/delete.html", {"ad": ad})
+    return render(
+        request,
+        "ads/detail.html",
+        {"ad": ad},
+    )

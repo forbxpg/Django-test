@@ -57,17 +57,6 @@
               Сбросить
             </a>
           </button>
-          <button
-            type="button"
-            class="h-10 text-white ml-112 bg-blue-600 transition-transform duration-100 hover:scale-105 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer"
-          >
-            <a
-              href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}user={{ user.id }}"
-              class="justify-center w-full"
-            >
-              Мои объявления
-            </a>
-          </button>
         </form>
       </div>
 
@@ -114,8 +103,9 @@
               <div class="mt-4 flex items-center justify-between">
                 {% if not request.user == ad.user %}
                   <a
-                    href="#"
+                    href="{% url 'exchanges:create-exchange-ad' ad.id %}"
                     class="inline-flex items-center justify-center w-8 h-8 text-white rounded-lg focus:ring-4 hover:scale-105"
+                    aria-label="Предложить обмен"
                   >
                     <?xml version="1.0" encoding="utf-8"?>
                     <svg
@@ -138,7 +128,7 @@
                 {% endif %}
                 <div class="flex-1 flex justify-center">
                   <span class="text-sm font-inter text-gray-500 dark:text-gray-400">
-                    {{ ad.created_at|time:"H:i" }}
+                    {{ ad.created_at|date:"d M  H:i" }}
                   </span>
                 </div>
                 <span
@@ -159,11 +149,6 @@
                 <li>
                   <a
                     href="?
-
-
-
-
-
 
 
 
@@ -199,13 +184,8 @@
 
 
 
-
-
-
-
-
                       {% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.next_page_number }}"
-                    class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-xl hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >Вперёд</a>
                 </li>
               {% endif %}

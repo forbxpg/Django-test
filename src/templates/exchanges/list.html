@@ -1,0 +1,98 @@
+{% extends "_base.html" %}
+{% load static tailwind_tags %}
+
+{% block content %}
+  <section class="max-w-5xl mx-auto mt-10">
+    <h1 class="text-2xl font-semibold mb-4">Мои предложения обмена</h1>
+    <form method="get" class="flex gap-4 mb-6">
+      <div>
+        <label class="block mb-1">Отправитель</label>
+        <select name="sender" class="border rounded p-2">
+          <option value="">Все</option>
+          {% for ad in user_ads %}
+            <option value="{{ ad.id }}" {% if request.GET.sender == ad.id|stringformat:"s" %}selected{% endif %}>
+              {{ ad.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="block mb-1">Получатель</label>
+        <select name="receiver" class="border rounded p-2">
+          <option value="">Все</option>
+          {% for ad in user_ads %}
+            <option value="{{ ad.id }}" {% if request.GET.receiver == ad.id|stringformat:"s" %}selected{% endif %}>
+              {{ ad.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="block mb-1">Статус</label>
+        <select name="status" class="border rounded p-2">
+          <option value="">Все</option>
+          {% for value, label in status_choices %}
+            <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>
+              {{ label }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Фильтровать</button>
+    </form>
+
+    <div class="space-y-4">
+      {% for proposal in page_obj %}
+        <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+          <div>
+            <p><strong>От:</strong> {{ proposal.ad_sender.title }} ({{ proposal.ad_sender.user.username }})</p>
+            <p><strong>Кому:</strong> {{ proposal.ad_receiver.title }} ({{ proposal.ad_receiver.user.username }})</p>
+            <p><strong>Комментарий:</strong> {{ proposal.comment|default:"—" }}</p>
+            <p><strong>Статус:</strong> {{ proposal.get_status_display }}</p>
+            <p class="text-sm text-gray-500">{{ proposal.created_at|date:"d.m.Y H:i" }}</p>
+          </div>
+          <div>
+            <a
+              href="{% url 'exchanges:exchange-detail' proposal.id %}"
+              class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+            >
+              Подробнее
+            </a>
+          </div>
+        </div>
+      {% empty %}
+        <p>Нет предложений обмена.</p>
+      {% endfor %}
+    </div>
+
+    <div class="mt-6">
+      {% if page_obj.has_previous or page_obj.has_next %}
+        <nav class="flex justify-center space-x-2">
+          {% if page_obj.has_previous %}
+            <a
+              href="?
+
+
+
+
+                {% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}"
+              class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            >&laquo; Назад</a>
+          {% endif %}
+          <span class="px-3 py-1">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+          {% if page_obj.has_next %}
+            <a
+              href="?
+
+
+
+
+                {% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.next_page_number }}"
+              class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            >Вперёд &raquo;</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

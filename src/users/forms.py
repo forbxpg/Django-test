@@ -3,8 +3,11 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from phonenumber_field.formfields import PhoneNumberField
 from unfold.forms import UserCreationForm
+
 from core import config
 
 
@@ -13,6 +16,11 @@ User = get_user_model()
 
 class UserCreateForm(UserCreationForm):
     """Форма для создания нового пользователя."""
+
+    phone = PhoneNumberField(
+        label=_("Номер телефона (опционально)"),
+        required=False,
+    )
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -61,6 +69,12 @@ class UserCreateForm(UserCreationForm):
         self.fields["password2"].widget.attrs.update(
             {
                 "placeholder": _("Повторите пароль"),
+                "class": config.TITLE_CLASS,
+            }
+        )
+        self.fields["phone"].widget.attrs.update(
+            {
+                "placeholder": _("Номер телефона (опционально)"),
                 "class": config.TITLE_CLASS,
             }
         )
