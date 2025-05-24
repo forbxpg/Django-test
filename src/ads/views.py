@@ -3,34 +3,30 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http.response import Http404
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.views.decorators.http import require_POST
 
 from core import config
 from .filters import AdFilter
 from .forms import AdForm
 from .models import Ad, Category
-from .services import get_excluded_ad_ids
+from .services import get_not_exchanged_ads_queryset
 
 
 def ads_list_view(request):
-    """Отображает список объявлений."""
-    excluded_ids = get_excluded_ad_ids()
-    ads = Ad.objects.select_related(
-        "user",
-        "category",
-    ).exclude(
-        id__in=excluded_ids,
-    )
+    """Отображает список объявлений на главной странице,
+    которые не были обменены.
+    """
+    ads = get_not_exchanged_ads_queryset()
     ad_filter = AdFilter(request.GET, queryset=ads)
     paginator = Paginator(ad_filter.qs, config.ADS_PER_PAGE)
     page_num = request.GET.get("page")
     try:
         page_obj = paginator.page(page_num)
-    except PageNotAnInteger:
-        page_obj = paginator.page(config.FIRST_PAGE)
-    except EmptyPage:
-        page_obj = paginator.page(paginator.num_pages)
+    except (PageNotAnInteger, EmptyPage):
+        page_obj = paginator.page(1)
     return render(
         request,
         "ads/list.html",
@@ -43,8 +39,21 @@ def ads_list_view(request):
 
 
 def ad_detail_view(request, ad_id):
-    """Отображает детальную информацию об объявлении."""
-    ad = get_object_or_404(Ad, id=ad_id)
+    """Отображает детальную информацию об объявлении.
+    Разрешает просмотр объявления только его владельцу,
+    если оно уже было обменено.
+    """
+    ad = get_object_or_404(
+        Ad.objects.select_related(
+            "user",
+            "category",
+        ),
+        id=ad_id,
+    )
+    if ad.is_exchanged and ad.user != request.user:
+        raise Http404(
+            _("Такого объявления не найдено."),
+        )
     return render(
         request,
         "ads/detail.html",
@@ -68,7 +77,6 @@ def ad_create_view(request):
             )
     else:
         form = AdForm()
-
     return render(
         request,
         "ads/form.html",
@@ -78,8 +86,11 @@ def ad_create_view(request):
 
 @login_required
 def ad_update_view(request, ad_id):
-    """Редактирует существующее объявление."""
-    ad = get_object_or_404(Ad, id=ad_id)
+    """Редактирует существующее объявление.
+    Если оно не было обменено.
+    """
+    ads = get_not_exchanged_ads_queryset()
+    ad = get_object_or_404(ads, id=ad_id)
     if ad.user != request.user:
         raise PermissionDenied(
             _("У вас нет прав на редактирование этого объявления."),
@@ -99,9 +110,13 @@ def ad_update_view(request, ad_id):
 
 
 @login_required
+@require_POST
 def ad_delete_view(request, ad_id):
-    """Удаляет существующее объявление."""
-    ad = get_object_or_404(Ad, id=ad_id)
+    """Удаляет существующее объявление.
+    Если оно не было обменено.
+    """
+    ads = get_not_exchanged_ads_queryset()
+    ad = get_object_or_404(ads, id=ad_id)
     if ad.user != request.user:
         raise PermissionDenied(
             _("У вас нет прав на удаление этого объявления."),

@@ -7,19 +7,15 @@ from exchanges.models import ExchangeProposal
 from .models import Ad, Category
 
 
-def get_ads_queryset():
+def get_not_exchanged_ads_queryset():
     """Получает queryset для всех объявлений
-    с user и category с применением JOIN.
+    с user и category с применением JOIN-запроса.
+
+    Исключает объявления, которые уже были обменены.
     """
     return Ad.objects.select_related(
         "user",
         "category",
+    ).filter(
+        is_exchanged=False,
     )
-
-
-def get_excluded_ad_ids():
-    """Получает список ID объявлений, которые уже были обменены."""
-    ids = ExchangeProposal.objects.filter(
-        status=ExchangeStatusChoices.ACCEPTED
-    ).values_list("ad_sender", "ad_receiver")
-    return {ad_id for pair in ids for ad_id in pair if ad_id}

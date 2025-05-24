@@ -9,7 +9,7 @@ from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
 
 from ads.models import Ad
-from ads.services import get_ads_queryset
+from ads.services import get_not_exchanged_ads_queryset
 from core import config, utils
 from .forms import ExchangeForm, ExchangeStatusForm
 from .models import ExchangeProposal
@@ -18,7 +18,7 @@ from .models import ExchangeProposal
 @login_required
 def exchange_create_view(request, ad_id=None):
     """Cоздает предложение обмена для объявления."""
-    ads = get_ads_queryset()
+    ads = get_not_exchanged_ads_queryset()
     user_ads = request.user.ads.all()
     other_ads = ads.exclude(user=request.user)
     if request.method == "POST":
