@@ -74,6 +74,10 @@ class ExchangeWriteSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Предложение обмена уже существует для этих объявлений."
             )
+        if ad_sender.user == ad_receiver.user:
+            raise serializers.ValidationError(
+                "Нельзя обменивать свои собственные объявления."
+            )
         return attrs
 
     def to_representation(self, instance):

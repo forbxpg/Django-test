@@ -1,5 +1,6 @@
 """Модуль для настроек проекта."""
 
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -151,14 +152,13 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": "1 day",
-    "REFRESH_TOKEN_LIFETIME": "30 days",
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 DJOSER = {
     "SERIALIZERS": {
-        "user_create": "api.v1.serializers.user.UserSerializer",
         "user": "api.v1.serializers.user.UserSerializer",
         "current_user": "api.v1.serializers.user.UserSerializer",
     },
