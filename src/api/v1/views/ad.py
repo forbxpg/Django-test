@@ -1,7 +1,8 @@
 """Модуль представлений для объявлений."""
 
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status, permissions
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, status, permissions, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -10,6 +11,7 @@ from ads.services import (
     get_not_exchanged_ads_queryset,
     check_is_ad_related_to_sender_or_receiver,
 )
+from api.v1.filters import AdFilterSet
 from api.v1.pagination import PageNumberPagination
 from api.v1.serializers import (
     AdSerializer,
@@ -25,6 +27,9 @@ class AdViewSet(viewsets.ModelViewSet):
     serializer_class = AdSerializer
     permission_classes = (IsAdOwnerOrReadOnly,)
     pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_class = AdFilterSet
+    search_fields = ("title", "description")
 
     def get_object(self):
         """Возвращает объект объявления, если объявление
@@ -40,7 +45,9 @@ class AdViewSet(viewsets.ModelViewSet):
                 ad, self.request.user
             ):
                 return Response(
-                    {"detail": "Объявление не найдено или уже было обменено."},
+                    {
+                        "detail": "Объявление не найдено или уже было обменено.",
+                    },
                     status=status.HTTP_404_NOT_FOUND,
                 )
         return ad

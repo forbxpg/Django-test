@@ -1,9 +1,11 @@
 """Модуль представлений для работы с моделью обменов."""
 
 from django.db import models
-from rest_framework import viewsets, response, status
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, response, status, filters
 from rest_framework.decorators import action
 
+from api.v1.filters import ExchangeFilterSet
 from api.v1.pagination import PageNumberPagination
 from api.v1.serializers import (
     ExchangeReadSerializer,
@@ -19,6 +21,9 @@ class ExchangeViewSet(viewsets.ModelViewSet):
 
     permission_classes = (IsExchangeParticipant,)
     pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filterset_class = ExchangeFilterSet
+    search_fields = ("ad_sender__title", "ad_receiver__title")
 
     def get_queryset(self):
         user = self.request.user
