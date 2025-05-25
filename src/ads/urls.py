@@ -13,4 +13,5 @@ urlpatterns = [
     path("create/", views.ad_create_view, name="ad-create"),
     path("<int:ad_id>/update/", views.ad_update_view, name="ad-update"),
     path("<int:ad_id>/delete/", views.ad_delete_view, name="ad-delete"),
+    path("categories/", views.category_list_view, name="category-list"),
 ]

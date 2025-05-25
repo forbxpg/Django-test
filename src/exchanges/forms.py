@@ -44,12 +44,26 @@ class ExchangeForm(forms.ModelForm):
             raise forms.ValidationError(
                 _("Нельзя обмениваться одним и тем же объявлением.")
             )
-        if ExchangeProposal.objects.filter(
-            ad_sender=ad_sender,
-            ad_receiver=ad_receiver,
-        ).exists():
+        if (
+            ExchangeProposal.objects.filter(
+                ad_sender=ad_sender,
+                ad_receiver=ad_receiver,
+            ).exists()
+            or ExchangeProposal.objects.filter(
+                ad_sender=ad_receiver,
+                ad_receiver=ad_sender,
+            ).exists()
+        ):
             raise forms.ValidationError(
                 _("Предложение обмена уже существует для этих объявлений.")
+            )
+        if ad_sender.user == ad_receiver.user:
+            raise forms.ValidationError(
+                _("Нельзя обмениваться своими собственными объявлениями.")
+            )
+        if ad_sender.is_exchanged or ad_receiver.is_exchanged:
+            raise forms.ValidationError(
+                _("Нельзя обмениваться уже обмененными объявлениями.")
             )
         return cleaned_data
 

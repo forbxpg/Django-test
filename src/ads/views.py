@@ -9,10 +9,14 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.decorators.http import require_POST
 
 from core import config
+from exchanges.models import ExchangeProposal
 from .filters import AdFilter
 from .forms import AdForm
 from .models import Ad, Category
-from .services import get_not_exchanged_ads_queryset
+from .services import (
+    get_not_exchanged_ads_queryset,
+    check_is_ad_related_to_sender_or_receiver,
+)
 
 
 def ads_list_view(request):
@@ -40,8 +44,8 @@ def ads_list_view(request):
 
 def ad_detail_view(request, ad_id):
     """Отображает детальную информацию об объявлении.
-    Разрешает просмотр объявления только его владельцу,
-    если оно уже было обменено.
+    Разрешает просмотр обмененного объявления владельцу
+    объявления или пользователю, который инициировал обмен.
     """
     ad = get_object_or_404(
         Ad.objects.select_related(
@@ -51,9 +55,8 @@ def ad_detail_view(request, ad_id):
         id=ad_id,
     )
     if ad.is_exchanged and ad.user != request.user:
-        raise Http404(
-            _("Такого объявления не найдено."),
-        )
+        if not check_is_ad_related_to_sender_or_receiver(ad, request.user):
+            raise Http404(_("Объявление не найдено или уже обменено."))
     return render(
         request,
         "ads/detail.html",
@@ -128,4 +131,17 @@ def ad_delete_view(request, ad_id):
         request,
         "ads/detail.html",
         {"ad": ad},
+    )
+
+
+def category_list_view(request):
+    """Отображает список всех категорий объявлений.
+    Можно перенести в context_processor.
+    """
+    return render(
+        request,
+        "category/list.html",
+        {
+            "categories": Category.objects.all(),
+        },
     )
