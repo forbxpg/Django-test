@@ -1,20 +1,22 @@
 """Модуль представлений для работы с моделью обменов."""
 
 from django.db import models
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, response, status
+from rest_framework.decorators import action
 
 from api.v1.serializers import (
-    ExchangeStatusSerializer,
     ExchangeReadSerializer,
     ExchangeWriteSerializer,
 )
+from api.v1.permissions import IsExchangeParticipant, IsExchangeReceiver
+from core.utils import ExchangeStatusChoices
 from exchanges.models import ExchangeProposal
 
 
 class ExchangeViewSet(viewsets.ModelViewSet):
     """Представление для работы с предложениями обмена."""
 
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsExchangeParticipant,)
 
     def get_queryset(self):
         user = self.request.user
@@ -29,3 +31,35 @@ class ExchangeViewSet(viewsets.ModelViewSet):
         if self.action == "create":
             return ExchangeWriteSerializer
         return ExchangeReadSerializer
+
+    @action(
+        methods=["post"],
+        detail=True,
+        permission_classes=(IsExchangeReceiver,),
+        url_path="accept",
+    )
+    def accept_proposal(self, request, pk=None):
+        """Принять предложение обмена."""
+        proposal = self.get_object()
+        proposal.status = ExchangeStatusChoices.ACCEPTED
+        proposal.save(update_fields=["status"])
+        return response.Response(
+            ExchangeReadSerializer(proposal).data,
+            status=status.HTTP_200_OK,
+        )
+
+    @action(
+        methods=["post"],
+        detail=True,
+        permission_classes=(IsExchangeReceiver,),
+        url_path="reject",
+    )
+    def reject_proposal(self, request, pk=None):
+        """Отклонить предложение обмена."""
+        proposal = self.get_object()
+        proposal.status = ExchangeStatusChoices.REJECTED
+        proposal.save(update_fields=["status"])
+        return response.Response(
+            ExchangeReadSerializer(proposal).data,
+            status=status.HTTP_200_OK,
+        )

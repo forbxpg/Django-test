@@ -83,24 +83,3 @@ class ExchangeWriteSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         """Преобразование данных для ответа."""
         return ExchangeReadSerializer(instance).data
-
-
-class ExchangeStatusSerializer(serializers.ModelSerializer):
-    """Сериализатор для обновления статуса обмена."""
-
-    class Meta:
-        model = ExchangeProposal
-        fields = ("status",)
-
-    def validate(self, attrs):
-        if self.instance.status == ExchangeStatusChoices.ACCEPTED:
-            raise serializers.ValidationError(
-                "Нельзя изменить статус уже завершенного обмена."
-            )
-        return attrs
-
-    def update(self, instance, validated_data):
-        """Обновление статуса обмена."""
-        instance.status = validated_data.get("status", instance.status)
-        instance.save()
-        return instance

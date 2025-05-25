@@ -60,7 +60,7 @@ class ExchangeProposal(models.Model):
             ),
             models.CheckConstraint(
                 check=~models.Q(ad_sender__user=models.F("ad_receiver__user")),
-                name="ad_sender_not_equal_ad_receiver_user",
+                name="ad_sender_user_not_equal_ad_receiver_user",
                 violation_error_message=_(
                     "Объявления отправителя и получателя не могут принадлежать одному пользователю."
                 ),

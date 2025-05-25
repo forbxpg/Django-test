@@ -9,7 +9,7 @@ from ads.services import (
     check_is_ad_related_to_sender_or_receiver,
 )
 from api.v1.serializers import AdSerializer
-from api.v1.permissions import IsOwnerOrReadOnly
+from api.v1.permissions import IsAdOwnerOrReadOnly
 
 
 class AdViewSet(viewsets.ModelViewSet):
@@ -17,7 +17,7 @@ class AdViewSet(viewsets.ModelViewSet):
 
     queryset = get_not_exchanged_ads_queryset()
     serializer_class = AdSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsAdOwnerOrReadOnly,)
 
     def get_object(self):
         """Возвращает объект объявления, если объявление
