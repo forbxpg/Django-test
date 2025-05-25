@@ -1,12 +1,7 @@
-"""Модуль для фикстур тестов API и базового Django приложения."""
-
-from django.urls import reverse
-import pytest
-from pytest_lazyfixture import lazy_fixture
-
-
-# Base Django fixtures
-@pytest.fixture
-def login_url():
-    ...
-
+pytest_plugins = [
+    "tests.fixtures.fixture_api_users",
+    "tests.fixtures.fixture_api_data",
+    "tests.fixtures.fixture_base_users",
+    "tests.fixtures.fixture_base_data",
+    "tests.fixtures.fixture_base_urls",
+]

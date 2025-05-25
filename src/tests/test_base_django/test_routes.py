@@ -3,4 +3,5 @@
 from http import HTTPStatus
 
 import pytest
-from pytest_django import asserts
+from django.test import Client
+from django.urls import reverse
