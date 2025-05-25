@@ -1,7 +1,8 @@
 """Модуль представлений для объявлений."""
-
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status, response
 
+from ads.models import Ad
 from ads.services import (
     get_not_exchanged_ads_queryset,
     check_is_ad_related_to_sender_or_receiver,
@@ -22,7 +23,10 @@ class AdViewSet(viewsets.ModelViewSet):
         обменено и не связано с отправителем или получателем,
         то возвращает 404 Not Found.
         """
-        ad = super().get_object()
+        ad = get_object_or_404(
+            Ad.objects.select_related("user", "receiver"),
+            pk=self.kwargs.get("pk"),
+        )
         if not check_is_ad_related_to_sender_or_receiver(
             ad, self.request.user
         ):
