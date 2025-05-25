@@ -3,14 +3,15 @@
 from rest_framework import serializers
 
 from ads.models import Ad, Category
-from api.v1.serializers import CategorySerializer
 
 
 class AdSerializer(serializers.ModelSerializer):
     """Сериализатор для объявлений."""
 
-    category = CategorySerializer(
-        read_only=True,
+    category = serializers.SlugRelatedField(
+        slug_field="slug",
+        queryset=Category.objects.all(),
+        required=True,
     )
     user = serializers.SlugRelatedField(
         slug_field="username",
@@ -28,12 +29,10 @@ class AdSerializer(serializers.ModelSerializer):
             "condition",
             "category",
             "created_at",
-            "is_exchanged",
         )
         read_only_fields = (
             "id",
             "created_at",
-            "is_exchanged",
         )
 
     def create(self, validated_data):

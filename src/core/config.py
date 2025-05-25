@@ -20,6 +20,10 @@ USER_NAME_LENGTH = 150
 PHONE_REGION = "RU"
 
 
+# API constants
+PAGE_SIZE = 8
+MAX_PAGE_SIZE = 100
+
 
 
 # CSS classes

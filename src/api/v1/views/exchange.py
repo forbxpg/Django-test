@@ -4,6 +4,7 @@ from django.db import models
 from rest_framework import viewsets, response, status
 from rest_framework.decorators import action
 
+from api.v1.pagination import PageNumberPagination
 from api.v1.serializers import (
     ExchangeReadSerializer,
     ExchangeWriteSerializer,
@@ -17,6 +18,7 @@ class ExchangeViewSet(viewsets.ModelViewSet):
     """Представление для работы с предложениями обмена."""
 
     permission_classes = (IsExchangeParticipant,)
+    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         user = self.request.user
@@ -28,7 +30,7 @@ class ExchangeViewSet(viewsets.ModelViewSet):
         )
 
     def get_serializer_class(self):
-        if self.action == "create":
+        if self.action in ("create", "update", "partial_update"):
             return ExchangeWriteSerializer
         return ExchangeReadSerializer
 
@@ -38,7 +40,7 @@ class ExchangeViewSet(viewsets.ModelViewSet):
         permission_classes=(IsExchangeReceiver,),
         url_path="accept",
     )
-    def accept_proposal(self, request, pk=None):
+    def accept_proposal(self, request, *args, **kwargs):
         """Принять предложение обмена."""
         proposal = self.get_object()
         proposal.status = ExchangeStatusChoices.ACCEPTED
@@ -54,7 +56,7 @@ class ExchangeViewSet(viewsets.ModelViewSet):
         permission_classes=(IsExchangeReceiver,),
         url_path="reject",
     )
-    def reject_proposal(self, request, pk=None):
+    def reject_proposal(self, request, *args, **kwargs):
         """Отклонить предложение обмена."""
         proposal = self.get_object()
         proposal.status = ExchangeStatusChoices.REJECTED
