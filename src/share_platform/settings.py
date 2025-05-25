@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     # local apps
     "ads.apps.AdsConfig",
+    "api.apps.ApiConfig",
     "exchanges.apps.ExchangesConfig",
     "users.apps.UsersConfig",
 ]
