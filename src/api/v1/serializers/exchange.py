@@ -3,7 +3,23 @@
 from rest_framework import serializers
 
 from ads.services import get_not_exchanged_ads_queryset
+from core.utils import ExchangeStatusChoices
 from exchanges.models import ExchangeProposal
+
+
+class ExchangeReadSerializer(serializers.ModelSerializer):
+    """Сериализатор для чтения предложений обмена."""
+
+    class Meta:
+        model = ExchangeProposal
+        fields = (
+            "id",
+            "ad_sender",
+            "ad_receiver",
+            "comment",
+            "status",
+            "created_at",
+        )
 
 
 class ExchangeWriteSerializer(serializers.ModelSerializer):
@@ -60,5 +76,27 @@ class ExchangeWriteSerializer(serializers.ModelSerializer):
             )
         return attrs
 
+    def to_representation(self, instance):
+        """Преобразование данных для ответа."""
+        return ExchangeReadSerializer(instance).data
 
 
+class ExchangeStatusSerializer(serializers.ModelSerializer):
+    """Сериализатор для обновления статуса обмена."""
+
+    class Meta:
+        model = ExchangeProposal
+        fields = ("status",)
+
+    def validate(self, attrs):
+        if self.instance.status == ExchangeStatusChoices.ACCEPTED:
+            raise serializers.ValidationError(
+                "Нельзя изменить статус уже завершенного обмена."
+            )
+        return attrs
+
+    def update(self, instance, validated_data):
+        """Обновление статуса обмена."""
+        instance.status = validated_data.get("status", instance.status)
+        instance.save()
+        return instance

@@ -82,3 +82,12 @@ class ExchangeStatusForm(forms.ModelForm):
                 choices=utils.ExchangeStatusChoices.choices,
             ),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        status = cleaned_data.get("status")
+        if self.instance.status == utils.ExchangeStatusChoices.ACCEPTED:
+            raise forms.ValidationError(
+                _("Нельзя изменить статус уже завершенного обмена.")
+            )
+        return cleaned_data
