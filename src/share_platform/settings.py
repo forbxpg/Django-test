@@ -149,3 +149,17 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
 }
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": "1 day",
+    "REFRESH_TOKEN_LIFETIME": "30 days",
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+
+DJOSER = {
+    "SERIALIZERS": {
+        "user_create": "api.v1.serializers.user.UserSerializer",
+        "user": "api.v1.serializers.user.UserSerializer",
+        "current_user": "api.v1.serializers.user.UserSerializer",
+    },
+}
