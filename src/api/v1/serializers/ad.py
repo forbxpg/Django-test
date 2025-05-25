@@ -3,14 +3,14 @@
 from rest_framework import serializers
 
 from ads.models import Ad, Category
+from api.v1.serializers import CategorySerializer
 
 
 class AdSerializer(serializers.ModelSerializer):
     """Сериализатор для объявлений."""
 
-    category = serializers.SlugRelatedField(
-        slug_field="slug",
-        queryset=Category.objects.all(),
+    category = CategorySerializer(
+        read_only=True,
     )
     user = serializers.SlugRelatedField(
         slug_field="username",
