@@ -12,7 +12,9 @@ AUTH_USER_MODEL = "users.User"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-^ysx+z&w)-ny7px3cclaj4qq%iwjcftrb8o)obb*%%9%-he0i*"
+SECRET_KEY = (
+    "django-insecure-^ysx+z&w)-ny7px3cclaj4qq%iwjcftrb8o)obb*%%9%-he0i*"
+)
 
 DEBUG = True
 
@@ -26,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # third party apps
     "django_filters",
+    "djoser",
     "rest_framework",
     "tailwind",
     "theme",
@@ -136,3 +139,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "/ads/"
 
 LOGIN_URL = "users:login"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ],
+}
