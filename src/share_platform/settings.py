@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "django_filters",
     "djoser",
     "rest_framework",
+    "rest_framework_simplejwt",
     "tailwind",
     "theme",
     "unfold",
