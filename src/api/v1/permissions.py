@@ -12,7 +12,7 @@ class IsAdOwnerOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
         )
 
 
-class IsExchangeParticipant(permissions.BasePermission):
+class IsExchangeParticipant(permissions.IsAuthenticated):
     """Проверяет, что пользователь является владельцем обмена."""
 
     def has_object_permission(self, request, view, obj):

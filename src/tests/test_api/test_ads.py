@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 import pytest
 
 from ads.models import Ad
@@ -11,7 +13,7 @@ class TestAdsAPI:
 
     def test_ads_endpoint_no_auth(self, client):
         response = client.get(self.ADS_URL)
-        assert response.status_code == 200
+        assert response.status_code == HTTPStatus.OK
         assert "results" in response.data
         assert isinstance(response.data["results"], list)
 
@@ -25,7 +27,7 @@ class TestAdsAPI:
             },
             format="json",
         )
-        assert response.status_code == 401
+        assert response.status_code == HTTPStatus.UNAUTHORIZED
 
     def test_create_ad_with_auth(
         self,
@@ -39,7 +41,7 @@ class TestAdsAPI:
             "category": api_category.slug,
         }
         response = api_user_one_client.post(self.ADS_URL, data=data)
-        assert response.status_code == 201
+        assert response.status_code == HTTPStatus.CREATED
         assert response.data["title"] == data["title"]
         assert response.data["description"] == data["description"]
         assert Ad.objects.count() == 1
@@ -52,7 +54,7 @@ class TestAdsAPI:
             },
             format="json",
         )
-        assert response.status_code == 401
+        assert response.status_code == HTTPStatus.UNAUTHORIZED
 
     def test_ad_update_auth(
         self, api_user_one_client, api_ad_one, api_user_one, api_category_two
@@ -65,7 +67,7 @@ class TestAdsAPI:
             data=data,
             format="json",
         )
-        assert response.status_code == 200
+        assert response.status_code == HTTPStatus.OK
         assert response.data["title"] == data["title"]
         assert response.data["description"] == api_ad_one.description
         assert response.data["title"] == Ad.objects.get(pk=api_ad_one.pk).title
@@ -75,7 +77,7 @@ class TestAdsAPI:
             self.AD_DETAIL_URL.format(pk=api_ad_one.pk),
             format="json",
         )
-        assert response.status_code == 403
+        assert response.status_code == HTTPStatus.FORBIDDEN
         assert Ad.objects.count() == 1
 
     def test_ad_delete_author(self, api_user_one_client, api_ad_one):
@@ -83,7 +85,5 @@ class TestAdsAPI:
             self.AD_DETAIL_URL.format(pk=api_ad_one.pk),
             format="json",
         )
-        assert response.status_code == 204
+        assert response.status_code == HTTPStatus.NO_CONTENT
         assert Ad.objects.count() == 0
-
-
