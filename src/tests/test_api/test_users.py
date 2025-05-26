@@ -4,7 +4,7 @@ import pytest
 from rest_framework import status
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestDjoserUserAPI:
 
     REGISTER_URL = "/api/v1/users/"
