@@ -60,3 +60,22 @@ def exchange_base(db, ad_one, ad_three):
         ad_receiver=ad_three,
         status=ExchangeStatusChoices.ACCEPTED,
     )
+
+
+@pytest.fixture
+def ad_four(db, category_two, user_three):
+    return Ad.objects.create(
+        title="Ad Four",
+        description="Description for Ad Four",
+        category=category_two,
+        user=user_three,
+    )
+
+
+@pytest.fixture
+def exchange_base_two(db, ad_two, ad_four):
+    return ExchangeProposal.objects.create(
+        ad_sender=ad_four,
+        ad_receiver=ad_two,
+        status=ExchangeStatusChoices.PENDING,
+    )

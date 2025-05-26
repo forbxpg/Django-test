@@ -35,7 +35,7 @@ class TestBaseDjangoAds:
             },
         )
         assert response.status_code == HTTPStatus.FOUND
-        assert "?next" in response.url
+        assert "/users/login/?next=/ads/" in response.url
 
     def test_create_ad_auth(self, user_one_client, category_one):
         response = user_one_client.post(
@@ -106,3 +106,4 @@ class TestBaseDjangoAds:
         )
         assert response.status_code == HTTPStatus.FORBIDDEN
         assert Ad.objects.filter(id=ad_one.id).exists()
+

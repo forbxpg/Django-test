@@ -40,6 +40,10 @@ class ExchangeForm(forms.ModelForm):
         cleaned_data = super().clean()
         ad_sender = cleaned_data.get("ad_sender")
         ad_receiver = cleaned_data.get("ad_receiver")
+        if not ad_sender or not ad_receiver:
+            raise forms.ValidationError(
+                _("Пожалуйста, выберите оба объявления для обмена.")
+            )
         if ad_sender == ad_receiver:
             raise forms.ValidationError(
                 _("Нельзя обмениваться одним и тем же объявлением.")

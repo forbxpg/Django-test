@@ -20,7 +20,7 @@ def user_register_view(request):
         form = UserCreateForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse("ads:ad-list"))
+            return redirect(reverse("ads:ads-list"))
     else:
         form = UserCreateForm()
     return render(
@@ -39,7 +39,9 @@ def user_profile_view(request):
             instance=request.user,
         )
         if not request.user == form.instance.user:
-            raise PermissionDenied(_("You do not have permission to edit this user."))
+            raise PermissionDenied(
+                _("You do not have permission to edit this user.")
+            )
         if form.is_valid():
             form.save()
             return redirect(reverse("ads:ads-list"))

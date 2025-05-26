@@ -1,9 +1,9 @@
 """Модуль представлений для обменов."""
 
-from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
 from django.contrib.auth.decorators import login_required
+from django.http.response import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
@@ -92,9 +92,7 @@ def exchange_detail_view(request, proposal_id):
         proposal.ad_sender.user != request.user
         and proposal.ad_receiver.user != request.user
     ):
-        raise PermissionDenied(
-            _("У вас нет прав на просмотр этого предложения обмена.")
-        )
+        raise Http404(_("Увы, таких предложений обмена не найдено."))
     if request.method == "POST":
         form = ExchangeStatusForm(request.POST, instance=proposal)
         if form.is_valid():
