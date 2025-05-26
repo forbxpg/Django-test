@@ -3,6 +3,8 @@ from http import HTTPStatus
 import pytest
 
 from ads.models import Ad
+from core.utils import ExchangeStatusChoices
+from exchanges.models import ExchangeProposal
 
 
 @pytest.mark.django_db(transaction=True)
@@ -87,3 +89,14 @@ class TestAdsAPI:
         )
         assert response.status_code == HTTPStatus.NO_CONTENT
         assert Ad.objects.count() == 0
+
+    def test_exchanged_ad_detail_no_participant(
+        self,
+        api_accepted_exchange,
+        api_user_three_client,
+        api_ad_one,
+    ):
+        response = api_user_three_client.get(
+            self.AD_DETAIL_URL.format(pk=api_ad_one.pk)
+        )
+        assert response.status_code == HTTPStatus.NOT_FOUND

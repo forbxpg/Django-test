@@ -47,7 +47,7 @@ class AdViewSet(viewsets.ModelViewSet):
         ad = super().get_object()
         if ad.is_exchanged:
             if not check_is_ad_related_to_sender_or_receiver(
-                self.request.user, ad
+                ad, self.request.user
             ):
                 raise Http404(_("Объявление не найдено или уже обменено."))
         return ad

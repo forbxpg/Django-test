@@ -22,7 +22,7 @@ class IsExchangeParticipant(permissions.IsAuthenticated):
         )
 
 
-class IsExchangeReceiver(permissions.BasePermission):
+class IsExchangeReceiver(permissions.IsAuthenticated):
     """Проверяет, что пользователь является получателем обмена."""
 
     def has_object_permission(self, request, view, obj):

@@ -62,3 +62,31 @@ def api_user_two_client(api_user_two_token):
         HTTP_AUTHORIZATION=f"Bearer {api_user_two_token['access']}"
     )
     return client
+
+
+@pytest.fixture
+def api_user_three(django_user_model):
+    return django_user_model.objects.create_user(
+        username="apiuser3",
+        password="apipassword3",
+        first_name="API3",
+        last_name="User3",
+        email="some@sda.ru",
+    )
+
+
+@pytest.fixture
+def api_user_three_token(api_user_three):
+    token = AccessToken.for_user(api_user_three)
+    return {
+        "access": str(token),
+    }
+
+
+@pytest.fixture
+def api_user_three_client(api_user_three_token):
+    client = APIClient()
+    client.credentials(
+        HTTP_AUTHORIZATION=f"Bearer {api_user_three_token['access']}"
+    )
+    return client
