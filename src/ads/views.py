@@ -9,7 +9,6 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.decorators.http import require_POST
 
 from core import config
-from exchanges.models import ExchangeProposal
 from .filters import AdFilter
 from .forms import AdForm
 from .models import Ad, Category

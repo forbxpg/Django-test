@@ -3,8 +3,6 @@ from http import HTTPStatus
 import pytest
 
 from ads.models import Ad
-from core.utils import ExchangeStatusChoices
-from exchanges.models import ExchangeProposal
 
 
 @pytest.mark.django_db(transaction=True)

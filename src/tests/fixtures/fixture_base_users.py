@@ -3,7 +3,7 @@ from django.test import Client
 
 
 @pytest.fixture
-def auth_user(django_user_model):
+def user_one(django_user_model):
     return django_user_model.objects.create_user(
         username="testuser",
         password="testpassword",
@@ -14,32 +14,14 @@ def auth_user(django_user_model):
 
 
 @pytest.fixture
-def auth_user_client(auth_user):
+def user_one_client(user_one):
     client = Client()
-    client.force_login(auth_user)
+    client.force_login(user_one)
     return client
 
 
 @pytest.fixture
-def ad_user_one(django_user_model):
-    return django_user_model.objects.create_user(
-        username="aduser",
-        password="adpassword",
-        email="ademail@em.com",
-        first_name="Ad",
-        last_name="User",
-    )
-
-
-@pytest.fixture
-def ad_user_client(ad_user_one):
-    client = Client()
-    client.force_login(ad_user_one)
-    return client
-
-
-@pytest.fixture
-def ad_user_two(django_user_model):
+def user_two(django_user_model):
     return django_user_model.objects.create_user(
         username="aduser2",
         password="adpassword2",
@@ -47,3 +29,28 @@ def ad_user_two(django_user_model):
         first_name="Ad2",
         last_name="User2",
     )
+
+
+@pytest.fixture
+def user_two_client(user_two):
+    client = Client()
+    client.force_login(user_two)
+    return client
+
+
+@pytest.fixture
+def user_three(django_user_model):
+    return django_user_model.objects.create_user(
+        username="aduser3",
+        password="adpassword3",
+        email="somdasknd@email.com",
+        first_name="Ad3",
+        last_name="User3",
+    )
+
+
+@pytest.fixture
+def user_three_client(user_three):
+    client = Client()
+    client.force_login(user_three)
+    return client
