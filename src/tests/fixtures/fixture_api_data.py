@@ -22,8 +22,18 @@ def api_category_two(db):
 @pytest.fixture
 def api_ad_one(db, api_user_one, api_category):
     return Ad.objects.create(
-        title="Test ad obj",
-        description="Test desc",
+        title="Test Ad One",
+        description="This is a test ad one.",
         user=api_user_one,
         category=api_category,
+    )
+
+
+@pytest.fixture
+def api_ad_two(db, api_user_one, api_category_two):
+    return Ad.objects.create(
+        title="Test Ad Two",
+        description="This is a test ad two.",
+        user=api_user_one,
+        category=api_category_two,
     )

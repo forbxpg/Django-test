@@ -85,3 +85,5 @@ class TestAdsAPI:
         )
         assert response.status_code == 204
         assert Ad.objects.count() == 0
+
+
