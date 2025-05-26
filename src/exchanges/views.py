@@ -8,7 +8,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
 
-from ads.models import Ad
 from ads.services import get_not_exchanged_ads_queryset
 from core import config, utils
 from .forms import ExchangeForm, ExchangeStatusForm
@@ -26,7 +25,7 @@ def exchange_create_view(request, ad_id=None):
         form.fields["ad_sender"].queryset = user_ads
         form.fields["ad_receiver"].queryset = other_ads
         if form.is_valid():
-            proposal = form.save()
+            form.save()
             return redirect(reverse("exchanges:exchanges-list"))
     else:
         initial = {}
@@ -65,10 +64,8 @@ def exchange_list_view(request):
     page = request.GET.get("page")
     try:
         page_obj = paginator.page(page)
-    except PageNotAnInteger:
+    except (PageNotAnInteger, EmptyPage):
         page_obj = paginator.page(1)
-    except EmptyPage:
-        page_obj = paginator.page(paginator.num_pages)
     context = {
         "page_obj": page_obj,
         "user_ads": request.user.ads.all(),

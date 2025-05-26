@@ -2,12 +2,13 @@ import pytest
 from django.urls import reverse
 
 from ads.models import Ad, Category
+from core.utils import ExchangeStatusChoices
 from exchanges.models import ExchangeProposal
 from tests.fixtures.fixture_base_users import user_one, user_two
 
 
 @pytest.fixture
-def category_one():
+def category_one(db):
     return Category.objects.create(
         name="Category One",
         slug="category-one",
@@ -15,7 +16,7 @@ def category_one():
 
 
 @pytest.fixture
-def category_two():
+def category_two(db):
     return Category.objects.create(
         name="Category Two",
         slug="category-two",
@@ -23,7 +24,7 @@ def category_two():
 
 
 @pytest.fixture
-def ad_one(category_one, user_one):
+def ad_one(db, category_one, user_one):
     return Ad.objects.create(
         title="Ad One",
         description="Description for Ad One",
@@ -33,7 +34,7 @@ def ad_one(category_one, user_one):
 
 
 @pytest.fixture
-def ad_two(category_one, user_one):
+def ad_two(db, category_one, user_one):
     return Ad.objects.create(
         title="Ad Two",
         description="Description for Ad Two",
@@ -43,7 +44,7 @@ def ad_two(category_one, user_one):
 
 
 @pytest.fixture
-def ad_three(category_two, user_two):
+def ad_three(db, category_two, user_two):
     return Ad.objects.create(
         title="Ad Three",
         description="Description for Ad Three",
@@ -52,3 +53,10 @@ def ad_three(category_two, user_two):
     )
 
 
+@pytest.fixture
+def exchange_base(db, ad_one, ad_three):
+    return ExchangeProposal.objects.create(
+        ad_sender=ad_one,
+        ad_receiver=ad_three,
+        status=ExchangeStatusChoices.ACCEPTED,
+    )
