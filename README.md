@@ -66,8 +66,8 @@
 │   │   ├── exchanges          # Шаблоны для обменов
 │   │   ├── users              # Шаблоны для пользователей
 │   │   └── _base.html         # Базовый шаблон
-│   ├── theme                  # Tailwind CSS и другие стили
-│   │   └── static # Конфигурация Tailwind CSS
+│   ├── theme                  # Приложение для Tailwind CSS
+│   │   └── static             # Продакшен сборка статики Tailwind CSS
 │   ├── manage.py              # Файл управления проектом Django
 │   ├── requirements.txt       # Зависимости проекта
 │   ├── .env.example           # Пример файла переменных окружения
