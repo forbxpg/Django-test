@@ -100,27 +100,24 @@ TEMPLATES = [
 WSGI_APPLICATION = "share_platform.wsgi.application"
 
 
-if os.environ.get("USE_SQLITE", default="true").lower() == "true":
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
+DEFAULT_DB = {
+    "ENGINE": "django.db.backends.sqlite3",
+    "NAME": BASE_DIR / "db.sqlite3",
+}
+
+if os.environ.get("USE_POSTGRESQL", default="false").lower() == "true":
+    DEFAULT_DB = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("POSTGRES_DB", default="share_platform"),
+        "USER": os.environ.get("POSTGRES_USER", default="postgres"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", default="postgres"),
+        "HOST": os.environ.get("POSTGRES_HOST", default="psql"),
+        "PORT": os.environ.get("POSTGRES_PORT", default="5432"),
     }
 
-if os.environ.get("USE_POSTGRES", default="false").lower() == "true":
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.environ.get("POSTGRES_DB", default="share_platform"),
-            "USER": os.environ.get("POSTGRES_USER", default="postgres"),
-            "PASSWORD": os.environ.get(
-                "POSTGRES_PASSWORD", default="password"
-            ),
-            "HOST": os.environ.get("POSTGRES_HOST", default="localhost"),
-            "PORT": os.environ.get("POSTGRES_PORT", default="5432"),
-        }
-    }
+DATABASES = {
+    "default": DEFAULT_DB,
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
