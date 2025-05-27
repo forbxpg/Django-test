@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     # third party apps
     "django_filters",
     "djoser",
+    "drf_yasg",
     "rest_framework",
     "rest_framework_simplejwt",
     "tailwind",
