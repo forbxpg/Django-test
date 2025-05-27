@@ -1,19 +1,36 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-    <title>Django Tailwind</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		{% tailwind_css %}
-	</head>
+<head>
+  <title>Django Tailwind</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  {% tailwind_css %}
+</head>
 
-	<body class="bg-gray-50 font-serif leading-normal tracking-normal">
-		<div class="container mx-auto">
-			<section class="flex items-center justify-center h-screen">
-				<h1 class="text-5xl">Django + Tailwind = ❤️</h1>
-			</section>
-		</div>
-	</body>
+<body class="bg-gray-50 font-serif leading-normal tracking-normal fixed w-full h-full">
+<section class="bg-white dark:bg-gray-900 mt-200">
+  <div class="py-20 px-4 mx-auto max-w-screen-xl text-center lg:px-12">
+    <h1 class="mb-4 text-5xl font-extrabold text-gray-900 dark:text-white sm:text-6xl">
+      Добро пожаловать на нашу платформу обмена
+    </h1>
+    <p class="mb-8 text-lg text-gray-500 dark:text-gray-400 sm:px-16 lg:px-48">
+      Обменивайтесь вещами легко и безопасно. Размещайте объявления, находите подходящие предложения и заключайте
+      выгодные сделки!
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="{% url 'ads:ad-create' %}" class="px-6 py-3 text-white bg-primary-600 rounded-lg hover:bg-primary-700">
+        Разместить объявление
+      </a>
+      <a
+        href="{% url 'ads:ads-list' %}"
+        class="px-6 py-3 text-gray-900 bg-gray-100 rounded-lg hover:bg-gray-200 dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+      >
+        Смотреть объявления
+      </a>
+    </div>
+  </div>
+</section>
+</body>
 </html>

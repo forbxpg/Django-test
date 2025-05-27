@@ -28,7 +28,9 @@ class Migration(migrations.Migration):
                 (
                     "comment",
                     models.TextField(
-                        blank=True, null=True, verbose_name="Комментарий к предложению"
+                        blank=True,
+                        null=True,
+                        verbose_name="Комментарий к предложению",
                     ),
                 ),
                 (
@@ -47,7 +49,8 @@ class Migration(migrations.Migration):
                 (
                     "created_at",
                     models.DateTimeField(
-                        auto_now_add=True, verbose_name="Дата предложения обмена"
+                        auto_now_add=True,
+                        verbose_name="Дата предложения обмена",
                     ),
                 ),
                 (
@@ -75,7 +78,9 @@ class Migration(migrations.Migration):
                 "ordering": ("-created_at",),
                 "indexes": [
                     models.Index(fields=["ad_sender"], name="ad_sender_idx"),
-                    models.Index(fields=["ad_receiver"], name="ad_receiver_idx"),
+                    models.Index(
+                        fields=["ad_receiver"], name="ad_receiver_idx"
+                    ),
                 ],
             },
         ),

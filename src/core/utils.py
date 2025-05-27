@@ -17,4 +17,3 @@ class ExchangeStatusChoices(TextChoices):
     PENDING = "pending", _("В ожидании")
     ACCEPTED = "accepted", _("Принято")
     REJECTED = "rejected", _("Отклонено")
-

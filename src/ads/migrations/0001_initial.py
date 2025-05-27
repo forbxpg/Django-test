@@ -28,7 +28,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "name",
-                    models.CharField(max_length=100, verbose_name="Название категории"),
+                    models.CharField(
+                        max_length=100, verbose_name="Название категории"
+                    ),
                 ),
                 (
                     "slug",
@@ -63,11 +65,16 @@ class Migration(migrations.Migration):
                         max_length=100, verbose_name="Заголовок объявления"
                     ),
                 ),
-                ("description", models.TextField(verbose_name="Описание объявления")),
+                (
+                    "description",
+                    models.TextField(verbose_name="Описание объявления"),
+                ),
                 (
                     "image_url",
                     models.URLField(
-                        blank=True, null=True, verbose_name="Ссылка на изображение"
+                        blank=True,
+                        null=True,
+                        verbose_name="Ссылка на изображение",
                     ),
                 ),
                 (
@@ -82,7 +89,8 @@ class Migration(migrations.Migration):
                 (
                     "created_at",
                     models.DateTimeField(
-                        auto_now_add=True, verbose_name="Дата создания объявления"
+                        auto_now_add=True,
+                        verbose_name="Дата создания объявления",
                     ),
                 ),
                 (

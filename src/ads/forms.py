@@ -46,5 +46,3 @@ class AdForm(forms.ModelForm):
             ),
         }
         labels = {"category": _("Категория"), "condition": _("Состояние")}
-
-

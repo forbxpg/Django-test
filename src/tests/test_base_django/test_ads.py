@@ -106,4 +106,3 @@ class TestBaseDjangoAds:
         )
         assert response.status_code == HTTPStatus.FORBIDDEN
         assert Ad.objects.filter(id=ad_one.id).exists()
-

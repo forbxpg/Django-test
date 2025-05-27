@@ -25,7 +25,6 @@ PAGE_SIZE = 8
 MAX_PAGE_SIZE = 100
 
 
-
 # CSS classes
 TITLE_CLASS = """
 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 

@@ -63,6 +63,3 @@ class TestBaseDjangoUsers:
         assert response.status_code == HTTPStatus.FOUND
         assert response.url == reverse("ads:ads-list")
         assert User.objects.count() == 1
-
-
-

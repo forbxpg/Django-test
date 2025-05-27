@@ -17,7 +17,7 @@ SECRET_KEY = (
     "django-insecure-^ysx+z&w)-ny7px3cclaj4qq%iwjcftrb8o)obb*%%9%-he0i*"
 )
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -57,6 +57,7 @@ INTERNAL_IPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -163,3 +164,5 @@ DJOSER = {
         "current_user": "api.v1.serializers.user.UserSerializer",
     },
 }
+
+NPM_BIN_PATH = "/usr/bin/npm"

@@ -5,11 +5,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+
+handler404 = "core.views.page_not_found"
+handler500 = "core.views.server_error"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
-    path("ads/", include("ads.urls")),
     path("", include("core.urls")),
+    path("ads/", include("ads.urls")),
     path("users/", include("users.urls")),
     path("exchanges/", include("exchanges.urls")),
 ]

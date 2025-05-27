@@ -6,8 +6,13 @@
     <h1 class="text-2xl font-semibold mb-4">Мои предложения обмена</h1>
     <form method="get" class="flex gap-4 mb-6">
       <div>
-        <label class="block mb-1">Отправитель</label>
-        <select name="sender" class="border rounded p-2">
+        <label class="block mb-1">Отправленные</label>
+        <select
+          name="sender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
+dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        >
           <option value="">Все</option>
           {% for ad in user_ads %}
             <option value="{{ ad.id }}" {% if request.GET.sender == ad.id|stringformat:"s" %}selected{% endif %}>
@@ -17,8 +22,13 @@
         </select>
       </div>
       <div>
-        <label class="block mb-1">Получатель</label>
-        <select name="receiver" class="border rounded p-2">
+        <label class="block mb-1">Полученные</label>
+        <select
+          name="receiver" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
+dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        >
           <option value="">Все</option>
           {% for ad in user_ads %}
             <option value="{{ ad.id }}" {% if request.GET.receiver == ad.id|stringformat:"s" %}selected{% endif %}>
@@ -29,7 +39,12 @@
       </div>
       <div>
         <label class="block mb-1">Статус</label>
-        <select name="status" class="border rounded p-2">
+        <select
+          name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
+dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        >
           <option value="">Все</option>
           {% for value, label in status_choices %}
             <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>
@@ -38,7 +53,11 @@
           {% endfor %}
         </select>
       </div>
-      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Фильтровать</button>
+      <button
+        type="submit"
+        class="text-white bg-blue-700 mt-9 transition-transform duration-100 hover:scale-105 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >Фильтровать
+      </button>
     </form>
 
     <div class="space-y-4">
@@ -54,7 +73,7 @@
           <div>
             <a
               href="{% url 'exchanges:exchange-detail' proposal.id %}"
-              class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+              class="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
             >
               Подробнее
             </a>
@@ -73,8 +92,6 @@
               href="?
 
 
-
-
                 {% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}"
               class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
             >&laquo; Назад</a>
@@ -83,6 +100,9 @@
           {% if page_obj.has_next %}
             <a
               href="?
+
+
+
 
 
 

@@ -53,7 +53,10 @@ class UserCreateForm(UserCreationForm):
                 attrs={"placeholder": _("Имя"), "class": config.TITLE_CLASS}
             ),
             "last_name": forms.TextInput(
-                attrs={"placeholder": _("Фамилия"), "class": config.TITLE_CLASS},
+                attrs={
+                    "placeholder": _("Фамилия"),
+                    "class": config.TITLE_CLASS,
+                },
             ),
         }
 
@@ -131,6 +134,9 @@ class UserProfileForm(forms.ModelForm):
                 attrs={"placeholder": _("Имя"), "class": config.TITLE_CLASS}
             ),
             "last_name": forms.TextInput(
-                attrs={"placeholder": _("Фамилия"), "class": config.TITLE_CLASS},
+                attrs={
+                    "placeholder": _("Фамилия"),
+                    "class": config.TITLE_CLASS,
+                },
             ),
         }

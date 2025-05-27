@@ -55,14 +55,7 @@ class ExchangeProposal(models.Model):
                 check=~models.Q(ad_sender=models.F("ad_receiver")),
                 name="ad_sender_not_equal_ad_receiver",
                 violation_error_message=_(
-                    "Объявления отправителя и получателя не могут быть одинаковыми."
-                ),
-            ),
-            models.CheckConstraint(
-                check=~models.Q(ad_sender__user=models.F("ad_receiver__user")),
-                name="ad_sender_user_not_equal_ad_receiver_user",
-                violation_error_message=_(
-                    "Объявления отправителя и получателя не могут принадлежать одному пользователю."
+                    "Объявления отправителя и получателя не могут быть одинаковыми."  # noqa: E501
                 ),
             ),
         ]
