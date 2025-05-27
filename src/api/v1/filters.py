@@ -1,7 +1,7 @@
 """Фильтры для API v1."""
 
 import django_filters
-from django.db import models
+
 from ads.models import Ad
 from exchanges.models import ExchangeProposal
 from core.utils import AdConditionChoices, ExchangeStatusChoices

@@ -3,7 +3,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
-from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.formfields import PhoneNumberField
 from unfold.forms import UserCreationForm
@@ -37,25 +36,31 @@ class UserCreateForm(UserCreationForm):
             "username": forms.TextInput(
                 attrs={
                     "placeholder": _("Имя пользователя"),
-                    "class": config.TITLE_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                 }
             ),
             "email": forms.EmailInput(
-                attrs={"placeholder": _("Email"), "class": config.TITLE_CLASS},
+                attrs={
+                    "placeholder": _("Email"),
+                    "class": config.DEFAULT_CSS_CLASS,
+                },
             ),
             "phone": forms.TextInput(
                 attrs={
                     "placeholder": _("Номер телефона (опционально)"),
-                    "class": config.TITLE_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                 }
             ),
             "first_name": forms.TextInput(
-                attrs={"placeholder": _("Имя"), "class": config.TITLE_CLASS}
+                attrs={
+                    "placeholder": _("Имя"),
+                    "class": config.DEFAULT_CSS_CLASS,
+                }
             ),
             "last_name": forms.TextInput(
                 attrs={
                     "placeholder": _("Фамилия"),
-                    "class": config.TITLE_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                 },
             ),
         }
@@ -66,19 +71,19 @@ class UserCreateForm(UserCreationForm):
         self.fields["password1"].widget.attrs.update(
             {
                 "placeholder": _("Пароль"),
-                "class": config.TITLE_CLASS,
+                "class": config.DEFAULT_CSS_CLASS,
             }
         )
         self.fields["password2"].widget.attrs.update(
             {
                 "placeholder": _("Повторите пароль"),
-                "class": config.TITLE_CLASS,
+                "class": config.DEFAULT_CSS_CLASS,
             }
         )
         self.fields["phone"].widget.attrs.update(
             {
                 "placeholder": _("Номер телефона (опционально)"),
-                "class": config.TITLE_CLASS,
+                "class": config.DEFAULT_CSS_CLASS,
             }
         )
 
@@ -91,13 +96,13 @@ class UserLoginForm(AuthenticationForm):
         self.fields["username"].widget.attrs.update(
             {
                 "placeholder": _("Имя пользователя"),
-                "class": config.TITLE_CLASS,
+                "class": config.DEFAULT_CSS_CLASS,
             }
         )
         self.fields["password"].widget.attrs.update(
             {
                 "placeholder": _("Пароль"),
-                "class": config.TITLE_CLASS,
+                "class": config.DEFAULT_CSS_CLASS,
             }
         )
 
@@ -118,25 +123,31 @@ class UserProfileForm(forms.ModelForm):
             "username": forms.TextInput(
                 attrs={
                     "placeholder": _("Имя пользова��еля"),
-                    "class": config.TITLE_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                 }
             ),
             "email": forms.EmailInput(
-                attrs={"placeholder": _("Email"), "class": config.TITLE_CLASS},
+                attrs={
+                    "placeholder": _("Email"),
+                    "class": config.DEFAULT_CSS_CLASS,
+                },
             ),
             "phone": forms.TextInput(
                 attrs={
                     "placeholder": _("Номер телефона (опционально)"),
-                    "class": config.TITLE_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                 }
             ),
             "first_name": forms.TextInput(
-                attrs={"placeholder": _("Имя"), "class": config.TITLE_CLASS}
+                attrs={
+                    "placeholder": _("Имя"),
+                    "class": config.DEFAULT_CSS_CLASS,
+                }
             ),
             "last_name": forms.TextInput(
                 attrs={
                     "placeholder": _("Фамилия"),
-                    "class": config.TITLE_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                 },
             ),
         }

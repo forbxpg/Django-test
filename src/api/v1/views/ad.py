@@ -1,7 +1,6 @@
 """Модуль представлений для объявлений."""
 
 from django.http.response import Http404
-from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from django.utils.translation import gettext_lazy as _
 from rest_framework import viewsets, status, permissions, filters

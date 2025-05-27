@@ -4,7 +4,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from exchanges.models import ExchangeProposal
-from .models import Ad
 from core.utils import ExchangeStatusChoices
 
 

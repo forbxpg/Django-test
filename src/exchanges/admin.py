@@ -6,4 +6,5 @@ from .models import ExchangeProposal
 
 
 @admin.register(ExchangeProposal)
-class ExchangeProposalAdmin(ModelAdmin): ...
+class ExchangeProposalAdmin(ModelAdmin):
+    ...

@@ -3,7 +3,6 @@
 from rest_framework import serializers
 
 from ads.services import get_not_exchanged_ads_queryset
-from core.utils import ExchangeStatusChoices
 from exchanges.models import ExchangeProposal
 
 

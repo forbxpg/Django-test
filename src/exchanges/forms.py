@@ -20,18 +20,18 @@ class ExchangeForm(forms.ModelForm):
         widgets = {
             "ad_sender": forms.Select(
                 attrs={
-                    "class": config.TITLE_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                 },
             ),
             "ad_receiver": forms.Select(
                 attrs={
-                    "class": config.TITLE_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                 },
             ),
             "comment": forms.Textarea(
                 attrs={
-                    "class": config.TITLE_CLASS,
-                    "rows": config.DESCRIPTION_ROWS,
+                    "class": config.DEFAULT_CSS_CLASS,
+                    "rows": config.TEXT_INPUT_ROWS,
                 },
             ),
         }
@@ -81,17 +81,15 @@ class ExchangeStatusForm(forms.ModelForm):
         widgets = {
             "status": forms.Select(
                 attrs={
-                    "class": config.TITLE_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                 },
                 choices=utils.ExchangeStatusChoices.choices,
             ),
         }
 
     def clean(self):
-        cleaned_data = super().clean()
-        status = cleaned_data.get("status")
         if self.instance.status == utils.ExchangeStatusChoices.ACCEPTED:
             raise forms.ValidationError(
                 _("Нельзя изменить статус уже завершенного обмена.")
             )
-        return cleaned_data
+        return super().cleaned_data

@@ -1,11 +1,10 @@
 """Модуль форм для работы с объявлениями."""
 
 from django import forms
-from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from core import config
-from .models import Ad, Category
+from .models import Ad
 
 
 class AdForm(forms.ModelForm):
@@ -15,32 +14,32 @@ class AdForm(forms.ModelForm):
         widgets = {
             "title": forms.TextInput(
                 attrs={
-                    "class": config.TITLE_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                     "placeholder": _("Введите название объявления"),
                 },
             ),
             "description": forms.Textarea(
                 attrs={
-                    "rows": config.DESCRIPTION_ROWS,
-                    "class": config.DESCRIPTION_CLASS,
+                    "rows": config.TEXT_INPUT_ROWS,
+                    "class": config.DEFAULT_CSS_CLASS,
                     "placeholder": _("Введите описание объявления"),
                 }
             ),
             "category": forms.Select(
                 attrs={
-                    "class": config.CATEGORY_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                     "placeholder": _("Выберите категорию"),
                 }
             ),
             "condition": forms.Select(
                 attrs={
-                    "class": config.CONDITION_CLASS,
+                    "class": config.DEFAULT_CSS_CLASS,
                     "placeholder": _("Выберите состояние"),
                 }
             ),
             "image": forms.ClearableFileInput(
                 attrs={
-                    "class": config.IMAGE_CLASS + " custom-file-input",
+                    "class": config.DEFAULT_CSS_CLASS + " custom-file-input",
                     "placeholder": _("Выберите изображение"),
                 }
             ),

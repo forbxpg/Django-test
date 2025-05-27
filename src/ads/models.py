@@ -2,7 +2,7 @@
 
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.crypto import get_random_string
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from core import config
@@ -94,12 +94,7 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            while True:
-                self.slug = str(self.name) + get_random_string(
-                    config.CATEGORY_SLUG_LENGTH,
-                )
-                if not Category.objects.filter(slug=self.slug).exists():
-                    break
+            self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
 
     def __str__(self):

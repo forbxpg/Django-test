@@ -1,6 +1,5 @@
-from urllib import request
+"""Представления для управления пользователями."""
 
-from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
@@ -40,7 +39,7 @@ def user_profile_view(request):
         )
         if not request.user == form.instance.user:
             raise PermissionDenied(
-                _("You do not have permission to edit this user.")
+                _("У вас нет прав для просмотра этой страницы.")
             )
         if form.is_valid():
             form.save()

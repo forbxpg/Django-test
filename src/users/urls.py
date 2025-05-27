@@ -1,7 +1,6 @@
 """Маршрутизация приложения users."""
 
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.views import LogoutView, LoginView
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from .forms import UserLoginForm

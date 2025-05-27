@@ -1,1 +1,12 @@
 db.sqlite3
+media
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.pot
+*.mo

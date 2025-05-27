@@ -1,11 +1,11 @@
-from django.contrib import admin
+"""Админка для модели объявлений."""
 
+from django.contrib import admin
 from unfold.admin import ModelAdmin
 
 from .models import Ad, Category
 
 
-# Register your models here.
 @admin.register(Category)
 class CategoryAdmin(ModelAdmin):
     """Админка для категорий."""
@@ -15,4 +15,5 @@ class CategoryAdmin(ModelAdmin):
 
 
 @admin.register(Ad)
-class AdAdmin(ModelAdmin): ...
+class AdAdmin(ModelAdmin):
+    ...

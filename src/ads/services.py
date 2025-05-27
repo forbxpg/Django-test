@@ -1,11 +1,9 @@
 """Сервисы для работы с объявлениями."""
 
 from django.db import models
-from django.shortcuts import get_object_or_404
 
-from core.utils import AdConditionChoices, ExchangeStatusChoices
 from exchanges.models import ExchangeProposal
-from .models import Ad, Category
+from .models import Ad
 
 
 def get_not_exchanged_ads_queryset():

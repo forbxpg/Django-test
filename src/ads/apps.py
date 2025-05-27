@@ -11,4 +11,4 @@ class AdsConfig(AppConfig):
         """Метод, вызываемый при запуске приложения.
         Включает триггер для сигналов.
         """
-        import ads.signals
+        import ads.signals  # noqa: F401
