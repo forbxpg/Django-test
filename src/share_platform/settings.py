@@ -1,8 +1,10 @@
 """Модуль для настроек проекта."""
 
+import os
 from datetime import timedelta
 from pathlib import Path
 
+from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
 
 
@@ -13,13 +15,11 @@ AUTH_USER_MODEL = "users.User"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = (
-    "django-insecure-^ysx+z&w)-ny7px3cclaj4qq%iwjcftrb8o)obb*%%9%-he0i*"
-)
+SECRET_KEY = os.environ.get("SECRET_KEY", default=get_random_secret_key)
 
-DEBUG = False
+DEBUG = os.environ.get("DEBUG", default="false").lower() == "true"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="*").split(",")
 
 INSTALLED_APPS = [
     "django.contrib.auth",
@@ -50,10 +50,9 @@ INSTALLED_APPS = [
 ]
 
 TAILWIND_APP_NAME = "theme"
-INTERNAL_IPS = [
-    "0.0.0.0",
-    "127.0.0.1",
-]
+INTERNAL_IPS = os.environ.get(
+    "INTERNAL_IPS", default="127.0.0.1,0.0.0.0"
+).split(",")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -66,7 +65,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-if DEBUG:
+BROWSER_RELOAD = (
+    os.environ.get("BROWSER_RELOAD", default="false").lower() == "true"
+)
+
+if BROWSER_RELOAD:
     INSTALLED_APPS.append("django_browser_reload")
     MIDDLEWARE.append(
         "django_browser_reload.middleware.BrowserReloadMiddleware",
@@ -124,7 +127,6 @@ TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 
-
 USE_TZ = True
 
 MEDIA_URL = "/media/"
@@ -165,4 +167,4 @@ DJOSER = {
     },
 }
 
-NPM_BIN_PATH = "/usr/bin/npm"
+NPM_BIN_PATH = os.environ.get("NPM_BIN_PATH", default="/usr/bin/npm")

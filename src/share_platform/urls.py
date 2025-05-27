@@ -27,6 +27,8 @@ if settings.DEBUG:
         settings.STATIC_URL,
         document_root=settings.STATIC_ROOT,
     )
+
+if settings.BROWSER_RELOAD:
     urlpatterns += [
         path("__reload__/", include("django_browser_reload.urls")),
     ]
