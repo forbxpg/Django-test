@@ -1,6 +1,6 @@
 """Маршрутизация приложения users."""
 
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import path
 
 from .forms import UserLoginForm
@@ -15,7 +15,7 @@ urlpatterns = [
     path("register/", views.user_register_view, name="register"),
     path(
         "login/",
-        views.LoginView.as_view(
+        LoginView.as_view(
             template_name="users/login.html",
             form_class=UserLoginForm,
         ),

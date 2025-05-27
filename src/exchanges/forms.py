@@ -92,4 +92,4 @@ class ExchangeStatusForm(forms.ModelForm):
             raise forms.ValidationError(
                 _("Нельзя изменить статус уже завершенного обмена.")
             )
-        return super().cleaned_data
+        return super().clean()
