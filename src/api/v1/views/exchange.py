@@ -48,6 +48,11 @@ class ExchangeViewSet(viewsets.ModelViewSet):
     def accept_proposal(self, request, *args, **kwargs):
         """Принять предложение обмена."""
         proposal = self.get_object()
+        if proposal.status in (ExchangeStatusChoices.ACCEPTED,):
+            return response.Response(
+                {"detail": "Предложение уже было обменено"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         proposal.status = ExchangeStatusChoices.ACCEPTED
         proposal.save(update_fields=["status"])
         return response.Response(
@@ -64,6 +69,14 @@ class ExchangeViewSet(viewsets.ModelViewSet):
     def reject_proposal(self, request, *args, **kwargs):
         """Отклонить предложение обмена."""
         proposal = self.get_object()
+        if proposal.status in (
+            ExchangeStatusChoices.REJECTED,
+            ExchangeStatusChoices.ACCEPTED,
+        ):
+            return response.Response(
+                {"detail": "Предложение уже было обменено или отклонено."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         proposal.status = ExchangeStatusChoices.REJECTED
         proposal.save(update_fields=["status"])
         return response.Response(
